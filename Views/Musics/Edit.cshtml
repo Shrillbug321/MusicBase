@@ -1,0 +1,100 @@
+﻿@model MusicBase.Models.Music
+
+@{
+    ViewData["Title"] = "Edytuj";
+}
+
+<h1>Edytuj utwór</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <a asp-action="Index" class="btn_link">⤶</a>
+        <form asp-action="Edit" EncType="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MusicId" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control border-primary border-2" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Author" class="control-label"></label>
+                <input asp-for="Author" class="form-control border-primary border-2" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PublishedDate" class="control-label"></label>
+                <input asp-for="PublishedDate" class="form-control border-primary border-2" />
+                <span asp-validation-for="PublishedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Length" class="control-label"></label>
+                <input asp-for="Length" class="form-control border-primary border-2" />
+                <span asp-validation-for="Length" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Publisher" class="control-label"></label>
+                <input asp-for="Publisher" class="form-control border-primary border-2" />
+                <span asp-validation-for="Publisher" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Genre" class="control-label"></label>
+                <select asp-for="Genre" asp-items="ViewBag.Genre" class="form-control border-primary border-2"></select>
+                <span asp-validation-for="Genre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cover" class="control-label">Okładka</label>
+                <label class="btn btn-primary">Przeglądaj
+                    <input asp-for="Cover" type="file" accept="image/png" id="coverInput">
+                </label>
+                <img src="@ViewData["Cover"]" class="cover" id="cover"/>
+                <span asp-validation-for="Cover" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Track" class="control-label">Utwór</label>
+
+                <div>
+                    <label class="btn btn-primary">Przeglądaj
+                        <input asp-for="Track" type="file" accept="audio/mp3" id="trackInput">
+                    </label>
+                    <audio controls id="audioSource" style="margin-top: 15px;">
+                        <source src="@ViewData["Track"]" type="audio/mpeg" id="track">
+                    </audio>
+                </div>
+                <span asp-validation-for="Track" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Zapisz" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn_link">⤶</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+    const coverInput = document.getElementById('coverInput');
+    const cover = document.getElementById('cover');
+    const trackInput = document.getElementById('trackInput');
+    const track = document.getElementById('track');
+    const audioSource = document.getElementById('audioSource');
+
+    audioSource.hidden = @Html.Raw((ViewData["Track"] == null).ToString().ToLower())
+    coverInput.addEventListener('input', updateCover);
+    trackInput.addEventListener('input', updateTrack);
+
+    function updateCover(e) {
+      cover.src = URL.createObjectURL(e.target.files[0]);
+    }
+
+    function updateTrack(e) {
+      track.src = URL.createObjectURL(e.target.files[0]);
+      audioSource.load();
+      audioSource.hidden = false;
+    }
+</script>

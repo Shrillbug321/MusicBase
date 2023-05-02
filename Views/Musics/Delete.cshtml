@@ -1,0 +1,40 @@
+﻿@model MusicBase.Models.Music
+
+@{
+    ViewData["Title"] = "Usuń utwór";
+}
+
+<h1>Usuń utwór</h1>
+
+<h3>Na pewno chcesz usunąć @Html.DisplayFor(model => model.Name)?</h3>
+<div>
+     <a asp-action="Index" class="btn_link">⤶</a>
+    <table class="details_table mb-3">
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Author)</td>
+            <td>@Html.DisplayFor(model => model.Author)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.PublishedDate)</td>
+            <td>@Html.DisplayFor(model => model.PublishedDate)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Length)</td>
+            <td>@Html.DisplayFor(model => model.Length)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Publisher)</td>
+            <td>@Html.DisplayFor(model => model.Publisher)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Genre)</td>
+            <td>@Html.DisplayFor(model => model.Genre)</td>
+        </tr>
+    </table>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="MusicId" />
+        <input type="submit" value="Usuń" class="btn btn-danger" /> <br />
+        <a asp-action="Index" class="btn_link">⤶</a>
+    </form>
+</div>

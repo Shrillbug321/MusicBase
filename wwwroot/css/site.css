@@ -1,0 +1,166 @@
+html {
+	font-size: 14px;
+}
+
+@media (min-width: 768px) {
+	html {
+		font-size: 16px;
+	}
+}
+
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	margin-bottom: 60px;
+}
+
+
+body {
+	background-image: url("background.svg");
+	background-size: cover;
+}
+
+#main {
+	background-color: rgba(255,255,255,0.9);
+	backdrop-filter: blur(10px);
+	border-radius: 20px;
+	margin-top: 3%;
+}
+
+.header {
+	background-color: rgba(255,255,255,0.9);
+	backdrop-filter: blur(10px);
+}
+
+input[type="file"] {
+	display: none;
+}
+
+.file-upload-btn {
+	border: 1px solid #ccc;
+	display: inline-block;
+	padding: 6px 12px;
+	cursor: pointer;
+}
+
+.cover {
+	width: 180px;
+	height: 180px;
+	cursor: pointer;
+}
+
+.cover_big {
+	width: 500px;
+	height: 500px;
+	cursor: pointer;
+	margin-top: 50vh;
+	position: fixed;
+	overflow: hidden;
+}
+
+.image_background {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100vw;
+	height: 133.5vh;
+	background-color: rgba(128,128,128,0.5);
+	position: fixed;
+	z-index: 1;
+	backdrop-filter: blur(5px);
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+}
+
+.btn_link {
+	text-decoration: none;
+	color: black;
+}
+
+.details_table {
+	margin-top: 18px;
+}
+
+	.details_table td {
+		border: 2px solid black;
+		padding: 8px;
+		background-color: white;
+	}
+
+		.details_table td:first-child {
+			font-weight: 700;
+			background-color: lightgreen;
+		}
+
+
+.tracks_table {
+	width: 100%;
+}
+
+.tracks_table th {
+	font-weight: 700;
+	border: 2px solid black;
+	padding: 8px;
+	background-color: lightgreen;
+}
+
+.tracks_table td {
+	border: 2px solid black;
+	padding: 8px;
+	background-color: white;
+}
+
+.star {
+	color: orange;
+	font-size: 32px;
+	opacity: 0.75;
+	cursor: pointer;
+}
+
+.hearth {
+	cursor: pointer;
+	user-select: none;
+}
+
+.vinyl {
+	width: 260px;
+	height: 260px;
+	position: absolute;
+	margin-top: 2.5%
+}
+
+.gramophone {
+	width: 410px;
+	height: 318px;
+}
+
+.jukebox {
+	position: absolute;
+	width: 250px;
+	height: 395px;
+	left: 80%;
+	background: brown;
+	top: 0;
+}
+
+.img_btn {
+	cursor: pointer;
+	user-select: none;
+}
+
+.dice {
+	width: 100px;
+	height: 100px;
+	position: fixed;
+}
+
+.skip {
+	width: 80px;
+	height: 80px;
+	float: right;
+	margin-right: 30px;
+}

@@ -1,0 +1,102 @@
+﻿@model MusicBase.Models.Music
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div>
+    <div class="image_background" onclick="smaller()" id="imageEnlarged" hidden="hidden">
+        <img src="@ViewData["Cover"]" class="cover_big">
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <a asp-action="Index" class="btn_link">⤶</a>
+
+            <h4>@Model.Author</h4>
+            <h2>@Model.Name  <a asp-action="Edit" asp-route-id="@Model?.MusicId" class="btn_link" style="display: inline">🖉</a></h2>
+            <p class="hearth" id="hearthOuter"><span id="hearth"></span></p>
+            <div>
+                <img src="@ViewData["Cover"]" class="cover" id="cover" onclick="enlarge()">
+            </div>
+            @if(ViewData["Track"] != null)
+            {
+                <div>
+                    <audio controls>
+                        <source src="@ViewData["Track"]" type="audio/mp3">
+                    </audio>
+                </div>
+            }
+           
+            <a asp-action="Index" class="btn_link">⤶</a>
+        </div>
+        <div class="col-7">
+            <table class="details_table">
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.PublishedDate)</td>
+                    <td>@Html.DisplayFor(model => model.PublishedDate)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Length)</td>
+                    <td>@Html.DisplayFor(model => model.Length)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Publisher)</td>
+                    <td>@Html.DisplayFor(model => model.Publisher)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Genre)</td>
+                    <td>@Html.DisplayFor(model => model.Genre)</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    const cover = document.getElementById('cover');
+    const imageEnlarged = document.getElementById('imageEnlarged');
+    const hearth = document.getElementById('hearth');
+    const hearthOuter = document.getElementById('hearthOuter');
+
+    if(localStorage.getItem("favourites") == null)
+        localStorage.setItem("favourites", "");
+
+    let favourites = localStorage.getItem("favourites");
+    let favouritesSplitted = favourites.split(",");
+    if (favouritesSplitted.indexOf("@Model.MusicId")>-1)
+    {
+        hearth.textContent = "❤";
+        hearthOuter.onclick = removeFromFavourite;
+    }
+    else
+    {
+        hearthOuter.onclick = addToFavourite;
+        hearth.textContent = "🖤";
+    }
+
+    function enlarge() {
+      imageEnlarged.hidden = false;
+    }
+
+    function smaller() {
+      imageEnlarged.hidden = true;
+    }
+
+    function addToFavourite()
+    {
+        hearth.textContent = "❤";
+        hearthOuter.onclick = removeFromFavourite;
+        localStorage.setItem("favourites", favourites+@Model.MusicId+",");
+    }
+
+    function removeFromFavourite()
+    {
+        hearth.textContent = "🖤";
+        hearthOuter.onclick = addToFavourite;
+        let index = favouritesSplitted.indexOf("@Model.MusicId");
+        if (index >-1)
+            favouritesSplitted.splice(index,1);
+        localStorage.setItem("favourites", favouritesSplitted.toString());
+    }
+
+</script>

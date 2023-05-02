@@ -1,0 +1,53 @@
+﻿@{
+	ViewData["Title"] = "Lista utworów";
+	Layout = "";
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+<div class="background">
+	<div class="text pt-5">
+		<h1>Muzykoteka</h1>
+
+		<div>
+			Proszę czekać jesteś <span id="messagesCounter"></span> w kolejce.
+		</div>
+	</div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+<script>
+	var url = '@Url.Action("GetMessagesCount", "Home")';
+	let messages = 1000;
+	let messagesCounter = document.getElementById("messagesCounter");
+	setInterval(getMessagesCount, 1000);
+
+	function getMessagesCount()
+	{
+		$.post(url, response => 
+		{
+			if(response < 2) {
+				window.location.href = '@Url.Action("Index", "Home")';
+			}
+			else
+			{	messagesCounter.textContent = response;
+				console.log(response);
+			}
+		})
+		.fail( response => console.log(response));
+	}
+  
+</script>
+
+<style>
+	.text {
+		color: white;
+		margin-left: auto;
+		margin-right: auto;
+		width: 25%;
+	}
+	.background {
+		background-color: #3a3a3a;
+		height: 100%;
+	}
+</style>

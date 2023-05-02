@@ -1,0 +1,166 @@
+﻿@model IEnumerable<MusicBase.Models.Music>
+
+@{
+	ViewData["Title"] = "Lista utworów";
+}
+
+<h1>Lista utworów</h1>
+
+<p>
+	<div class="row">
+		<div class="col-6">
+			<a asp-action="Create" class="btn_link">➕</a>
+		</div>
+		<div class="col-6" onclick="toggleSearch()">
+			<p style="float:right"><span id="slider" class="img_btn"></span></p>
+		</div>
+	</div>
+
+	<form asp-controller="Musics" asp-action="Index" id="searchPanel" hidden="true">
+		<p>
+			<div class="row">
+				<div class="col-3">
+					Tytuł: <input name="search[title]" class="border-primary" />
+				</div>
+				<div class="col-3">
+					Autor: <input name="search[author]" class="border-primary" />
+				</div>
+				<div class="col-3">
+					Wydawca: <input name="search[publisher]" class="border-primary" />
+				</div>
+				<div class="col-3 hearth" id="hearthOuter">
+					Tylko ulubione: <span id="hearth"></span>
+				</div>
+			</div> <br />
+
+			<div class="row">
+				<div class="col-2">
+					Data od: <input name="search[dataMin]" type="date" class="border-primary" />
+				</div>
+				<div class="col-2">
+					Data do: <input name="search[dataMax]" type="date" class="border-primary" />
+				</div>
+				<div class="col-2">
+					Długość od: <input name="search[lengthMin]" type="time" class="border-primary" />
+				</div>
+				<div class="col-2">
+					Długość do: <input name="search[lengthMax]" type="time" class="border-primary" />
+				</div>
+				<div class="col-3">
+					Gatunek <select name="search[genre]" asp-items="ViewBag.Genre"
+									class="form-select w-75 border-primary"
+									style="display: inline; border-width: 2px">
+						<option value="">Wszystkie</option>
+					</select>
+				</div>
+				<div class="col-1">
+					<input type="submit" value="Szukaj" class="btn btn-primary" />
+				</div>
+			</div><br />
+		</p>
+	</form>
+</p>
+<table class="tracks_table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Name)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Author)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.PublishedDate)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Length)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Publisher)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Genre)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr class="trackRow" id="@item.MusicId">
+				<td>
+					<a asp-action="Details" asp-route-id="@item.MusicId" class="btn_link">
+						@Html.DisplayFor(modelItem => item.Name)
+					</a>
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Author)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.PublishedDate)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Length)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Publisher)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Genre)
+				</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.MusicId" class="btn_link">🖉</a>
+					<a asp-action="Delete" asp-route-id="@item.MusicId" class="btn_link">❌</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+<script>
+
+	const cover = document.getElementById('cover');
+	const hearth = document.getElementById('hearth');
+	const hearthOuter = document.getElementById('hearthOuter');
+	hearthOuter.onclick = showOnlyFavourites;
+	hearth.textContent = "🖤";
+	slider.textContent = "ᐯ";
+
+	if(localStorage.getItem("favourites") == null)
+		localStorage.setItem("favourites", "");
+
+	let favourites = localStorage.getItem("favourites");
+	let favouritesSplitted = favourites.split(",");
+
+	function toggleSearch()
+	{
+		let searchPanel = document.getElementById("searchPanel");
+		let slider = document.getElementById("slider");
+		searchPanel.hidden = !searchPanel.hidden;
+		if (searchPanel.hidden)
+			slider.textContent = "ᐯ";
+		else
+			slider.textContent = "ᐱ";
+	}
+
+	function showOnlyFavourites()
+	{
+		hearthOuter.onclick = showAll;
+		hearth.textContent = "❤";
+		let trackRows = document.getElementsByClassName("trackRow");
+		for(let trackRow of trackRows)
+		{
+			if (!favouritesSplitted.includes(trackRow.getAttribute("id")))
+				trackRow.hidden = true;
+		}
+	}
+
+	function showAll()
+	{
+		hearthOuter.onclick = showOnlyFavourites;
+		hearth.textContent = "🖤";
+		let trackRows = document.getElementsByClassName("trackRow");
+
+		for(let trackRow of trackRows)
+			trackRow.hidden = false;
+	}
+</script>

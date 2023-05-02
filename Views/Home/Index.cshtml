@@ -1,0 +1,56 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+}
+<div class="row">
+	<div class="col-4">
+		<img src="~/img/dice.png" class="dice img_btn" onclick="randomTrack()"/>
+	</div>
+	<div class="col-4">
+		<h1 class="display-4 text-center">Muzykoteka</h1>
+	</div>
+	<div class="col-4">
+		<img src="~/img/skip.png" class="skip img_btn" onclick="window.location.href='/Musics/'">
+	</div>
+</div>
+<div style="margin-top: 5%">
+	<img src="~/img/vinyl.png" class="vinyl img_btn" onclick="startInserting()" id="vinyl"/>
+		<div class="text-center">
+	<img src="~/img/gramophone.png" class="gramophone"/>
+</div>
+
+</div>
+
+<script>
+	const vinyl = document.getElementById('vinyl');
+	let currentRotate = 0;
+	let currentRotatePercent = 0;
+	let currentPercent = 0;
+	
+	function startInserting()
+	{
+		let insertingInterval = setInterval(() => {
+			currentPercent += 1;
+			vinyl.style.marginLeft = currentPercent+"%";
+			if (currentPercent > 34)
+			{
+				clearInterval(insertingInterval);
+				let rotatingInterval = setInterval(() => {
+					currentRotate += 6;
+					vinyl.style.rotate = currentRotate+"deg";
+					if (currentRotate > 100)
+					{
+						clearInterval(rotatingInterval);
+						window.location.href = "/Musics";
+					}
+				}, 100);
+			}
+		}, 100);
+	}
+
+	function randomTrack()
+	{
+		let url = '@Url.Action("GetRandomTrack", "Musics")';
+		$.get(url, response => window.location.href = "/Musics/Details/"+response)
+		.fail(response => console.log(response));
+	}
+</script>
