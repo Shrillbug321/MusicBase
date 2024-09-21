@@ -58,7 +58,7 @@
     const hearth = document.getElementById('hearth');
     const hearthOuter = document.getElementById('hearthOuter');
 
-    if(localStorage.getItem("favourites") == null)
+    if (localStorage.getItem("favourites") == null)
         localStorage.setItem("favourites", "");
 
     let favourites = localStorage.getItem("favourites");
@@ -95,7 +95,7 @@
         hearthOuter.onclick = addToFavourite;
         let index = favouritesSplitted.indexOf("@Model.MusicId");
         if (index >-1)
-            favouritesSplitted.splice(index,1);
+            favouritesSplitted.splice(index, 1);
         localStorage.setItem("favourites", favouritesSplitted.toString());
     }
 

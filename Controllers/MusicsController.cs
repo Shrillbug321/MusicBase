@@ -15,12 +15,14 @@ namespace MusicBase.Controllers
 		BlobClient blobClient;
 		BlobContainerClient coversClient, tracksClient;
 		private const string magazineAccountName = "projektkm";
-		private const string connectionKey = "g7zeQcFGB1Msh96/m2dwdqOkpFSXjal8rOaTnHx8UomLN1nGxxzLHeZ/LZDJ5Qn+QVYbO/m0kNII+ASt+rTN9A==";
+
+		private const string connectionKey =
+			"g7zeQcFGB1Msh96/m2dwdqOkpFSXjal8rOaTnHx8UomLN1nGxxzLHeZ/LZDJ5Qn+QVYbO/m0kNII+ASt+rTN9A==";
 
 		public MusicsController(DbConnection context)
 		{
 			_context = context;
-			GetClients();
+			//GetClients();
 		}
 
 		// GET: Musics
@@ -44,11 +46,13 @@ namespace MusicBase.Controllers
 						break;
 					case "lengthMin":
 						date = DateTime.Parse(pair.Value);
-						tracks = tracks.Where(m => m.Length.TimeOfDay.TotalSeconds >= date.TimeOfDay.TotalSeconds).ToList();
+						tracks = tracks.Where(m => m.Length.TimeOfDay.TotalSeconds >= date.TimeOfDay.TotalSeconds)
+							.ToList();
 						break;
 					case "lengthMax":
 						date = DateTime.Parse(pair.Value);
-						tracks = tracks.Where(m => m.Length.TimeOfDay.TotalSeconds <= date.TimeOfDay.TotalSeconds).ToList();
+						tracks = tracks.Where(m => m.Length.TimeOfDay.TotalSeconds <= date.TimeOfDay.TotalSeconds)
+							.ToList();
 						break;
 					case "genre":
 						tracks = tracks.Where(m => m.Genre.ToString() == pair.Value).ToList();
@@ -64,27 +68,24 @@ namespace MusicBase.Controllers
 						break;
 				}
 			}
+
 			ViewBag.Genre = new SelectList(Enum.GetNames(typeof(Genre)));
-			DbContextOptions<DbConnection> options = new();
+			/*DbContextOptions<DbConnection> options = new();
 
 			options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-			DbConnection db = new(options);
-				return View(tracks);
+			DbConnection db = new(options);*/
+			return View(tracks);
 		}
 
 		// GET: Musics/Details/5
 		public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null || _context.Musics == null)
-			{
 				return NotFound();
-			}
 
-			var music = await _context.Musics.FirstOrDefaultAsync(m => m.MusicId == id);
+			Music music = await _context.Musics.FirstOrDefaultAsync(m => m.MusicId == id);
 			if (music == null)
-			{
 				return NotFound();
-			}
 			await TryGetCoverAndTrack(id.Value);
 			return View(music);
 		}
@@ -99,35 +100,28 @@ namespace MusicBase.Controllers
 		// POST: Musics/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("MusicId,Name,Author,PublishedDate,Length,Publisher,Genre,Cover")] Music music)
+		public async Task<IActionResult> Create(
+			[Bind("MusicId,Name,Author,PublishedDate,Length,Publisher,Genre,Cover")] Music music)
 		{
-			if (ModelState.IsValid)
-			{
-				_context.Musics.Add(music);
-				await _context.SaveChangesAsync();
-				int id = music.MusicId;
-				await ProcessCoverAndTrackForm(id, true);
-				return RedirectToAction(nameof(Details), new { id });
-			}
-			return View(music);
+			if (!ModelState.IsValid) return View(music);
+			_context.Musics.Add(music);
+			await _context.SaveChangesAsync();
+			int id = music.MusicId;
+			await ProcessCoverAndTrackForm(id, true);
+			return RedirectToAction(nameof(Details), new { id });
 		}
 
 		// GET: Musics/Edit/5
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null || _context.Musics == null)
-			{
 				return NotFound();
-			}
 
-			var music = await _context.Musics.FindAsync(id);
+			Music music = await _context.Musics.FindAsync(id);
 			if (music == null)
-			{
 				return NotFound();
-			}
 
 			ViewBag.Genre = new SelectList(Enum.GetNames(typeof(Genre)));
-
 			await TryGetCoverAndTrack(id.Value);
 
 			return View(music);
@@ -136,12 +130,11 @@ namespace MusicBase.Controllers
 		// POST: Musics/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("MusicId,Name,Author,PublishedDate,Length,Publisher,Genre")] Music music)
+		public async Task<IActionResult> Edit(int id,
+			[Bind("MusicId,Name,Author,PublishedDate,Length,Publisher,Genre")] Music music)
 		{
 			if (id != music.MusicId)
-			{
 				return NotFound();
-			}
 
 			if (ModelState.IsValid)
 			{
@@ -154,16 +147,13 @@ namespace MusicBase.Controllers
 				catch (DbUpdateConcurrencyException)
 				{
 					if (!MusicExists(music.MusicId))
-					{
 						return NotFound();
-					}
-					else
-					{
-						throw;
-					}
+					throw;
 				}
+
 				return RedirectToAction(nameof(Details), new { id });
 			}
+
 			return View(music);
 		}
 
@@ -171,17 +161,12 @@ namespace MusicBase.Controllers
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null || _context.Musics == null)
-			{
 				return NotFound();
-			}
 
-			var music = await _context.Musics
-				.FirstOrDefaultAsync(m => m.MusicId == id);
+			Music music = await _context.Musics.FirstOrDefaultAsync(m => m.MusicId == id);
+
 			if (music == null)
-			{
 				return NotFound();
-			}
-
 			return View(music);
 		}
 
@@ -191,14 +176,11 @@ namespace MusicBase.Controllers
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
 			if (_context.Musics == null)
-			{
 				return Problem("Entity set 'DbConnection.Musics'  is null.");
-			}
-			var music = await _context.Musics.FindAsync(id);
+
+			Music music = await _context.Musics.FindAsync(id);
 			if (music != null)
-			{
 				_context.Musics.Remove(music);
-			}
 
 			await _context.SaveChangesAsync();
 			return RedirectToAction(nameof(Index));
@@ -219,32 +201,33 @@ namespace MusicBase.Controllers
 
 		private async Task ProcessCoverAndTrackForm(int id, bool create = false)
 		{
+			Dictionary<string, IFormFile?> files = new();
+			Dictionary<string, string?> extensions = new()
+			{
+				["cover"] = "png",
+				["track"] = "mp3",
+			};
+
 			IFormFile? cover = null;
 			IFormFile? track = null;
 			foreach (IFormFile file in Request.Form.Files)
 			{
 				if (file.ContentType.Contains("image"))
-					cover = file;
+					files.Add("cover", file);
 				if (file.ContentType.Contains("audio"))
-					track = file;
+					files.Add("track", file);
 			}
 
 			string path = "temp/upload/" + id;
 
 			if (create) Directory.CreateDirectory(path);
 
-			if (cover != null)
+			foreach (KeyValuePair<string, IFormFile> file in files)
 			{
-				using (var stream = System.IO.File.Open($"{path}/cover_{id}.png", FileMode.Create))
-					cover.CopyTo(stream);
-				await UploadFile(coversClient, $"temp/upload/{id}/cover_{id}.png");
-			}
-
-			if (track != null)
-			{
-				using (var stream = System.IO.File.Open($"{path}/track_{id}.mp3", FileMode.Create))
-					track.CopyTo(stream);
-				await UploadFile(tracksClient, $"temp/upload/{id}/track_{id}.mp3");
+				await using var stream =
+					System.IO.File.Open($"{path}/{file.Key}_{id}.{extensions[file.Key]}", FileMode.Create);
+				await file.Value.CopyToAsync(stream);
+				await UploadFile(coversClient, $"temp/upload/{id}/{file.Key}_{id}.{extensions[file.Key]}");
 			}
 		}
 
@@ -255,14 +238,11 @@ namespace MusicBase.Controllers
 			{
 				base64 = Convert.ToBase64String(await DownloadFileContent(coversClient, $"cover_{id}.png"));
 				ViewData["Cover"] = "data:image / jpeg; base64," + base64;
-			}
-			catch (Exception) { };
-			try
-			{
+				
 				base64 = Convert.ToBase64String(await DownloadFileContent(tracksClient, $"track_{id}.mp3"));
-				ViewData["Track"] = "data:audio / mp3; base64," + base64;
+                ViewData["Track"] = "data:audio / mp3; base64," + base64;
 			}
-			catch (Exception) { };
+			catch (Exception) { }
 		}
 
 		[HttpGet]
@@ -277,6 +257,7 @@ namespace MusicBase.Controllers
 				id = random.Next(1, max + 1);
 				music = _context.Musics.FirstOrDefault(m => m.MusicId == id);
 			}
+
 			return id;
 		}
 	}

@@ -30,9 +30,7 @@ catch (Exception ex)
 }
 
 if (app.Environment.IsDevelopment())
-{
 	app.UseMigrationsEndPoint();
-}
 else
 {
 	app.UseExceptionHandler("/Home/Error");
@@ -61,7 +59,7 @@ var lo = new RequestLocalizationOptions
 	SupportedUICultures = sc
 };
 var cp = lo.RequestCultureProviders.OfType<CookieRequestCultureProvider>().First();
-cp.CookieName = "UserCulture"; // Or whatever name that you like
+cp.CookieName = "UserCulture";
 
 app.UseRequestLocalization(lo);
 

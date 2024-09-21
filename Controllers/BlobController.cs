@@ -6,7 +6,6 @@ namespace MusicBase.Controllers
 {
 	public class BlobController
 	{
-
 		public static void GetBlobServiceClient(ref BlobServiceClient blobServiceClient, string accountName, string accountKey)
 		{
 			StorageSharedKeyCredential sharedKeyCredential = new(accountName, accountKey);
@@ -31,7 +30,6 @@ namespace MusicBase.Controllers
 		{
 			string fileName = Path.GetFileName(localFilePath);
 			BlobClient blobClient = containerClient.GetBlobClient(fileName);
-
 			await blobClient.UploadAsync(localFilePath, true);
 		}
 

@@ -41,10 +41,10 @@
 					Data do: <input name="search[dataMax]" type="date" class="border-primary" />
 				</div>
 				<div class="col-2">
-					Długość od: <input name="search[lengthMin]" type="time" class="border-primary" />
+					Długość od: <br/><input name="search[lengthMin]" type="time" class="border-primary" />
 				</div>
 				<div class="col-2">
-					Długość do: <input name="search[lengthMax]" type="time" class="border-primary" />
+					Długość do: <br/><input name="search[lengthMax]" type="time" class="border-primary" />
 				</div>
 				<div class="col-3">
 					Gatunek <select name="search[genre]" asp-items="ViewBag.Genre"
@@ -125,7 +125,7 @@
 	hearth.textContent = "🖤";
 	slider.textContent = "ᐯ";
 
-	if(localStorage.getItem("favourites") == null)
+	if (localStorage.getItem("favourites") == null)
 		localStorage.setItem("favourites", "");
 
 	let favourites = localStorage.getItem("favourites");
@@ -147,11 +147,9 @@
 		hearthOuter.onclick = showAll;
 		hearth.textContent = "❤";
 		let trackRows = document.getElementsByClassName("trackRow");
-		for(let trackRow of trackRows)
-		{
+		for (let trackRow of trackRows)
 			if (!favouritesSplitted.includes(trackRow.getAttribute("id")))
 				trackRow.hidden = true;
-		}
 	}
 
 	function showAll()
@@ -159,8 +157,7 @@
 		hearthOuter.onclick = showOnlyFavourites;
 		hearth.textContent = "🖤";
 		let trackRows = document.getElementsByClassName("trackRow");
-
-		for(let trackRow of trackRows)
+		for (let trackRow of trackRows)
 			trackRow.hidden = false;
 	}
 </script>

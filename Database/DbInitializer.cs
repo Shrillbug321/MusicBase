@@ -10,19 +10,14 @@ namespace MusicBase.Database
 			context.Database.EnsureCreated();
 
 			if (context.Musics.Any())
-			{
-				return;   // DB has been seeded
-			}
+				return;
 
-			Music[] musics = new Music[]
+			List<Music> musics = new()
 			{
 				new Music {Author = "Michael Jackson", Genre = Genre.pop, Length = new DateTime(1,1,1, 0,5,57), Name= "Thriller", PublishedDate = new DateTime(1983,11,1), Publisher="Epic Records"},
-
 			};
-			foreach (Music m in musics)
-			{
-				context.Musics.Add(m);
-			}
+			
+			context.Musics.AddRange(musics);
 			context.SaveChanges();
 		}
 	}

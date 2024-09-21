@@ -3,19 +3,19 @@
     ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<h1 class="text-danger">Błąd</h1>
+<h2 class="text-danger">Wystąpił błąd podczas przetwarzania żadania.</h2>
 
 @if (Model.ShowRequestId)
 {
     <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+        <strong>ID żądania:</strong> <code>@Model.RequestId</code>
     </p>
 }
 
-<h3>Development Mode</h3>
+<h3>Tryb twórcy</h3>
 <p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
+    Przełączenie do środowiska <strong>developerskiego</strong> wyświetli więcej informacji na temat błędu.
 </p>
 <p>
     <strong>The Development environment shouldn't be enabled for deployed applications.</strong>

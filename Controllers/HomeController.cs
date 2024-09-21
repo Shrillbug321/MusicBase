@@ -7,21 +7,21 @@ namespace MusicBase.Controllers
 {
 	public class HomeController : Controller
 	{
-
-		static bool isSet = false;
-		ServiceBusClient client;
-		ServiceBusSender sender;
-		ServiceBusProcessor processor;
-		static int messagesInQueue = 1000;
-		static bool accessEnabled = false;
+		private static bool isSet;
+		private ServiceBusClient client;
+		private ServiceBusSender sender;
+		private ServiceBusProcessor processor;
+		private static int messagesInQueue = 1000;
+		private static bool accessEnabled;
 		private const string queueConnectionString = "Endpoint=sb://musicbasequeue.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=wy9ASUwncV0cExwUiIVIl/LZmHss9HYjEQ1qV7vf89c=";
 		private const string toWebsiteQueue = "a";
 		private const string toLoadBalancerQueue = "b";
 
-		public HomeController() { }
-
 		public IActionResult Index()
 		{
+#if DEBUG
+			accessEnabled = true;
+#endif
 			if (!accessEnabled)
 				return RedirectToAction(nameof(Lobby));
 			return View();
@@ -29,8 +29,8 @@ namespace MusicBase.Controllers
 
 		public async Task<IActionResult> Lobby()
 		{
-			if (accessEnabled)
-				return RedirectToAction(nameof(Index));
+			if (accessEnabled) return RedirectToAction(nameof(Index));
+			
 			if (!isSet)
 			{
 				isSet = true;
@@ -44,18 +44,14 @@ namespace MusicBase.Controllers
 		{
 			using ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
 			if (!messageBatch.TryAddMessage(new ServiceBusMessage("Enqueue")))
-			{
-				throw new Exception($"The message is too large to fit in the batch.");
-			}
-			Console.WriteLine("Enqueue");
+				throw new Exception("The message is too large to fit in the batch.");
+			
 			await sender.SendMessagesAsync(messageBatch);
 			processor.StartProcessingAsync();
 			while (!accessEnabled)
 			{
 				if (!messageBatch.TryAddMessage(new ServiceBusMessage("NumberInQueue")))
-				{
-					throw new Exception($"The message is too large to fit in the batch.");
-				}
+					throw new Exception("The message is too large to fit in the batch.");
 				await sender.SendMessagesAsync(messageBatch);
 				Thread.Sleep(3000);
 			}
@@ -68,7 +64,7 @@ namespace MusicBase.Controllers
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
 
-		void CreateBusClient()
+		private void CreateBusClient()
 		{
 			ServiceBusClientOptions clientOptions = new()
 			{
@@ -78,16 +74,16 @@ namespace MusicBase.Controllers
 			client = new ServiceBusClient(queueConnectionString, clientOptions);
 			sender = client.CreateSender(toLoadBalancerQueue);
 
-			processor = client.CreateProcessor(toWebsiteQueue, new ServiceBusProcessorOptions() { ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete });
+			processor = client.CreateProcessor(toWebsiteQueue, new ServiceBusProcessorOptions { ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete });
 			processor.ProcessMessageAsync += MessageHandler;
 			processor.ProcessErrorAsync += ErrorHandler;
 		}
 
 		async Task MessageHandler(ProcessMessageEventArgs args)
 		{
-			int a = int.Parse(args.Message.Body.ToString());
-			messagesInQueue = a < messagesInQueue ? a : messagesInQueue;
-			Console.WriteLine(messagesInQueue);
+			int receivedMessagesCounter = int.Parse(args.Message.Body.ToString());
+			messagesInQueue = receivedMessagesCounter < messagesInQueue ? receivedMessagesCounter : messagesInQueue;
+			
 			if (messagesInQueue < 2)
 			{
 				accessEnabled = true;
