@@ -6,7 +6,6 @@ namespace MusicBase.Database
 	{
 		public static void Initialize(DbConnection context)
 		{
-			/*context.Database.EnsureDeleted();*/
 			context.Database.EnsureCreated();
 
 			if (context.Musics.Any())

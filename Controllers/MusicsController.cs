@@ -70,10 +70,6 @@ namespace MusicBase.Controllers
 			}
 
 			ViewBag.Genre = new SelectList(Enum.GetNames(typeof(Genre)));
-			/*DbContextOptions<DbConnection> options = new();
-
-			options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-			DbConnection db = new(options);*/
 			return View(tracks);
 		}
 

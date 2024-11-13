@@ -19,9 +19,9 @@ namespace MusicBase.Controllers
 
 		public IActionResult Index()
 		{
-#if DEBUG
+			//Only for offline version	
 			accessEnabled = true;
-#endif
+			
 			if (!accessEnabled)
 				return RedirectToAction(nameof(Lobby));
 			return View();
