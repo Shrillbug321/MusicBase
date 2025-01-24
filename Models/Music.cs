@@ -30,6 +30,7 @@ namespace MusicBase.Models
 
 		[DisplayName("Gatunek")]
 		public Genre Genre { get; set; }
+		public int GenreId { get; set; }
 		public byte[]? Cover { get; set; }
 		public byte[]? Track { get; set; }
 	}

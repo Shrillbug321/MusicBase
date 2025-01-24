@@ -13,18 +13,19 @@ namespace MusicBase.Database
 
             List<Genre> genres = new()
             {
-                new Genre {Name = "rap"},
-                new Genre {Name = "pop"}
+                new Genre {Name = "pop"},
+                new Genre {Name = "disco"},
+                new Genre {Name = "klasyczna"},
+                new Genre {Name = "hiphop"},
+                new Genre {Name = "rap"}
             };
             context.Genres.AddRange(genres);
 
             List<Music> musics = new()
 			{
-				new Music {Author = "Michael Jackson", Genre = genres.ElementAt(0), Length = new DateTime(1,1,1, 0,5,57), Name= "Thriller", PublishedDate = new DateTime(1983,11,1), Publisher="Epic Records"},
+				new Music {Author = "Michael Jackson", Genre = genres.ElementAt(0), GenreId = 1, Length = new DateTime(1,1,1, 0,5,57), Name= "Thriller", PublishedDate = new DateTime(1983,11,1), Publisher="Epic Records"},
 			};
-			
 			context.Musics.AddRange(musics);
-
 
 			context.SaveChanges();
 		}

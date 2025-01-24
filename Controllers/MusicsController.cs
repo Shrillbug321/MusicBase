@@ -18,7 +18,7 @@ namespace MusicBase.Controllers
 		// GET: Musics
 		public async Task<IActionResult> Index(Dictionary<string, string> search)
 		{
-			List<Music> tracks = _context.Musics.ToList();
+			List<Music> tracks = _context.Musics.Include(music => music.Genre).ToList();
 
 			foreach (KeyValuePair<string, string> pair in search)
 			{
@@ -45,7 +45,7 @@ namespace MusicBase.Controllers
 							.ToList();
 						break;
 					case "genre":
-						tracks = tracks.Where(m => m.Genre.ToString() == pair.Value).ToList();
+						tracks = tracks.Where(m => m.GenreId.ToString() == pair.Value).ToList();
 						break;
 					case "title":
 						tracks = tracks.Where(m => m.Name.Contains(pair.Value)).ToList();
@@ -59,7 +59,7 @@ namespace MusicBase.Controllers
 				}
 			}
 
-			ViewBag.Genre = new SelectList(Enum.GetNames(typeof(Genre)));
+			ViewBag.Genre = CreateGenresOptions();
 			return View(tracks);
 		}
 
@@ -72,6 +72,9 @@ namespace MusicBase.Controllers
 			Music music = await _context.Musics.FirstOrDefaultAsync(m => m.MusicId == id);
 			if (music == null)
 				return NotFound();
+
+			music.Genre = _context.Genres.ToList().Find(g => g.GenreId == music.GenreId);
+			
 			ConvertTrackAndCover(id.Value);
 			return View(music);
 		}
@@ -79,7 +82,7 @@ namespace MusicBase.Controllers
 		// GET: Musics/Create
 		public IActionResult Create()
 		{
-			ViewBag.Genre = new SelectList(Enum.GetNames(typeof(Genre)));
+			ViewBag.Genre = CreateGenresOptions();
 			return View();
 		}
 
@@ -87,9 +90,19 @@ namespace MusicBase.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(
-			[Bind("MusicId,Name,Author,PublishedDate,Length,Publisher,Genre,Cover")] Music music)
+			[Bind("MusicId,Name,Author,PublishedDate,Length,Publisher,GenreId,Cover")]
+			Music music)
 		{
-			if (!ModelState.IsValid) return View(music);
+			music.Genre = _context.Genres.ToList().Find(g => g.GenreId == music.GenreId);
+			
+			if (!ModelState.IsValid)
+			{
+				if (ModelState.ContainsKey("Genre") && ModelState.ErrorCount == 1)
+					ModelState.Clear();
+				else
+					return View(music);
+			}
+			
 			_context.Musics.Add(music);
 			await _context.SaveChangesAsync();
 			int id = music.MusicId;
@@ -107,7 +120,7 @@ namespace MusicBase.Controllers
 			if (music == null)
 				return NotFound();
 
-			ViewBag.Genre = new SelectList(Enum.GetNames(typeof(Genre)));
+			ViewBag.Genre = CreateGenresOptions();
 			ConvertTrackAndCover(id.Value);
 
 			return View(music);
@@ -117,30 +130,35 @@ namespace MusicBase.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(int id,
-			[Bind("MusicId,Name,Author,PublishedDate,Length,Publisher,Genre")] Music music)
+			[Bind("MusicId,Name,Author,PublishedDate,Length,Publisher,GenreId")]
+			Music music)
 		{
 			if (id != music.MusicId)
 				return NotFound();
-
-			if (ModelState.IsValid)
+			music.Genre = _context.Genres.ToList().Find(g => g.GenreId == music.GenreId);
+			
+			if (!ModelState.IsValid)
 			{
-				await ProcessCoverAndTrackForm(id);
-				try
-				{
-					_context.Update(music);
-					await _context.SaveChangesAsync();
-				}
-				catch (DbUpdateConcurrencyException)
-				{
-					if (!MusicExists(music.MusicId))
-						return NotFound();
-					throw;
-				}
-
-				return RedirectToAction(nameof(Details), new { id });
+				if (ModelState.ContainsKey("Genre") && ModelState.ErrorCount == 1)
+					ModelState.Clear();
+				else
+					return View(music);
+			}
+			
+			await ProcessCoverAndTrackForm(id);
+			try
+			{
+				_context.Update(music);
+				await _context.SaveChangesAsync();
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				if (!MusicExists(music.MusicId))
+					return NotFound();
+				throw;
 			}
 
-			return View(music);
+			return RedirectToAction(nameof(Details), new { id });
 		}
 
 		// GET: Musics/Delete/5
@@ -150,6 +168,7 @@ namespace MusicBase.Controllers
 				return NotFound();
 
 			Music music = await _context.Musics.FirstOrDefaultAsync(m => m.MusicId == id);
+			music.Genre = _context.Genres.ToList().Find(g => g.GenreId == music.GenreId);
 
 			if (music == null)
 				return NotFound();
@@ -210,18 +229,22 @@ namespace MusicBase.Controllers
 
 		private void ConvertTrackAndCover(int id)
 		{
-			string base64;
 			try
 			{
-				byte[] filebytes = System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() + $"\\temp\\upload\\{id}\\cover_{id}.png");
-				base64 = Convert.ToBase64String(filebytes);
+				byte[] filebytes =
+					System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() +
+					                            $"\\temp\\upload\\{id}\\cover_{id}.png");
+				string base64 = Convert.ToBase64String(filebytes);
 				ViewData["Cover"] = "data:image / jpeg; base64," + base64;
 
-				filebytes = System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() + $"\\temp\\upload\\{id}\\track_{id}.mp3");
+				filebytes = System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() +
+				                                        $"\\temp\\upload\\{id}\\track_{id}.mp3");
 				base64 = Convert.ToBase64String(filebytes);
 				ViewData["Track"] = "data:audio / mp3; base64," + base64;
 			}
-			catch (Exception) { }
+			catch (Exception)
+			{
+			}
 		}
 
 		[HttpGet]
@@ -238,6 +261,15 @@ namespace MusicBase.Controllers
 			}
 
 			return id;
+		}
+
+		private List<SelectListItem> CreateGenresOptions()
+		{
+			return new List<SelectListItem>(_context.Genres.Select(g => new SelectListItem
+			{
+				Value = g.GenreId.ToString(),
+				Text = g.Name
+			}).ToList());
 		}
 	}
 }

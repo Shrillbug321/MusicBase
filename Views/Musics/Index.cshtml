@@ -48,8 +48,8 @@
 				</div>
 				<div class="col-3">
 					Gatunek <select name="search[genre]" asp-items="ViewBag.Genre"
-									class="form-select w-75 border-primary"
-									style="display: inline; border-width: 2px">
+					                class="form-select w-75 border-primary"
+					                style="display: inline; border-width: 2px">
 						<option value="">Wszystkie</option>
 					</select>
 				</div>
@@ -60,8 +60,10 @@
 		</p>
 	</form>
 </p>
-<table class="tracks_table">
-	<thead>
+@if (Model.Any())
+{
+	<table class="tracks_table">
+		<thead>
 		<tr>
 			<th>
 				@Html.DisplayNameFor(model => model.Name)
@@ -83,8 +85,8 @@
 			</th>
 			<th></th>
 		</tr>
-	</thead>
-	<tbody>
+		</thead>
+		<tbody>
 		@foreach (var item in Model)
 		{
 			<tr class="trackRow" id="@item.MusicId">
@@ -106,7 +108,7 @@
 					@Html.DisplayFor(modelItem => item.Publisher)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Genre)
+					@Html.DisplayFor(modelItem => item.Genre.Name)
 				</td>
 				<td>
 					<a asp-action="Edit" asp-route-id="@item.MusicId" class="btn_link">🖉</a>
@@ -114,8 +116,13 @@
 				</td>
 			</tr>
 		}
-	</tbody>
-</table>
+		</tbody>
+	</table>
+}
+else
+{
+	<div>Nie znaleziono utworów spełniających żądane kryteria</div>
+}
 <script>
 
 	const cover = document.getElementById('cover');
