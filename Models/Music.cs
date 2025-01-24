@@ -33,8 +33,4 @@ namespace MusicBase.Models
 		public byte[]? Cover { get; set; }
 		public byte[]? Track { get; set; }
 	}
-	public enum Genre
-	{
-		pop, disco, klasyczna, hiphop, rap
-	}
 }

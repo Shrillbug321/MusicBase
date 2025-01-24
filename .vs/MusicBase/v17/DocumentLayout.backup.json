@@ -1,0 +1,180 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\xampp\\htdocs\\MusicBase\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|c:\\xampp\\htdocs\\musicbase\\migrations\\20250124161950_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|solutionrelative:migrations\\20250124161950_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|c:\\xampp\\htdocs\\musicbase\\migrations\\dbconnectionmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|solutionrelative:migrations\\dbconnectionmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|c:\\xampp\\htdocs\\musicbase\\database\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|solutionrelative:database\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|c:\\xampp\\htdocs\\musicbase\\database\\dbconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|solutionrelative:database\\dbconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|c:\\xampp\\htdocs\\musicbase\\models\\music.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|solutionrelative:models\\music.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|c:\\xampp\\htdocs\\musicbase\\models\\genre.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|solutionrelative:models\\genre.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|c:\\xampp\\htdocs\\musicbase\\controllers\\musicscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|solutionrelative:controllers\\musicscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|c:\\xampp\\htdocs\\musicbase\\views\\musics\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|solutionrelative:views\\musics\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|c:\\xampp\\htdocs\\musicbase\\views\\musics\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|solutionrelative:views\\musics\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|c:\\xampp\\htdocs\\musicbase\\musicbase.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{D1438DB9-C79F-44AB-94A8-14D6D4D2DD95}|MusicBase.csproj|solutionrelative:musicbase.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DbConnectionModelSnapshot.cs",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\MusicBase\\Migrations\\DbConnectionModelSnapshot.cs",
+              "RelativeDocumentMoniker": "Migrations\\DbConnectionModelSnapshot.cs",
+              "ToolTip": "C:\\xampp\\htdocs\\MusicBase\\Migrations\\DbConnectionModelSnapshot.cs",
+              "RelativeToolTip": "Migrations\\DbConnectionModelSnapshot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-24T16:19:57.021Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20250124161950_Initial.cs",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\MusicBase\\Migrations\\20250124161950_Initial.cs",
+              "RelativeDocumentMoniker": "Migrations\\20250124161950_Initial.cs",
+              "ToolTip": "C:\\xampp\\htdocs\\MusicBase\\Migrations\\20250124161950_Initial.cs",
+              "RelativeToolTip": "Migrations\\20250124161950_Initial.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAiwDcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-24T16:19:51.158Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DbConnection.cs",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\MusicBase\\Database\\DbConnection.cs",
+              "RelativeDocumentMoniker": "Database\\DbConnection.cs",
+              "ToolTip": "C:\\xampp\\htdocs\\MusicBase\\Database\\DbConnection.cs",
+              "RelativeToolTip": "Database\\DbConnection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-24T09:36:45.302Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Genre.cs",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\MusicBase\\Models\\Genre.cs",
+              "RelativeDocumentMoniker": "Models\\Genre.cs",
+              "ToolTip": "C:\\xampp\\htdocs\\MusicBase\\Models\\Genre.cs",
+              "RelativeToolTip": "Models\\Genre.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-24T09:29:47.968Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Music.cs",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\MusicBase\\Models\\Music.cs",
+              "RelativeDocumentMoniker": "Models\\Music.cs",
+              "ToolTip": "C:\\xampp\\htdocs\\MusicBase\\Models\\Music.cs",
+              "RelativeToolTip": "Models\\Music.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAMwB8AAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-24T09:22:15.857Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DbInitializer.cs",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\MusicBase\\Database\\DbInitializer.cs",
+              "RelativeDocumentMoniker": "Database\\DbInitializer.cs",
+              "ToolTip": "C:\\xampp\\htdocs\\MusicBase\\Database\\DbInitializer.cs",
+              "RelativeToolTip": "Database\\DbInitializer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-24T09:21:09.133Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\MusicBase\\Views\\Musics\\Details.cshtml",
+              "RelativeDocumentMoniker": "Views\\Musics\\Details.cshtml",
+              "ToolTip": "C:\\xampp\\htdocs\\MusicBase\\Views\\Musics\\Details.cshtml",
+              "RelativeToolTip": "Views\\Musics\\Details.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-01-24T08:43:04.743Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\MusicBase\\Views\\Musics\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Musics\\Index.cshtml",
+              "ToolTip": "C:\\xampp\\htdocs\\MusicBase\\Views\\Musics\\Index.cshtml",
+              "RelativeToolTip": "Views\\Musics\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-01-24T08:42:55.821Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MusicsController.cs",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\MusicBase\\Controllers\\MusicsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\MusicsController.cs",
+              "ToolTip": "C:\\xampp\\htdocs\\MusicBase\\Controllers\\MusicsController.cs",
+              "RelativeToolTip": "Controllers\\MusicsController.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAAAiwD0AAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-24T08:39:31.069Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "MusicBase",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\MusicBase\\MusicBase.csproj",
+              "RelativeDocumentMoniker": "MusicBase.csproj",
+              "ToolTip": "C:\\xampp\\htdocs\\MusicBase\\MusicBase.csproj",
+              "RelativeToolTip": "MusicBase.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-01-24T08:34:27.147Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

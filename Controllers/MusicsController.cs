@@ -1,28 +1,18 @@
-﻿using Azure.Storage.Blobs;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MusicBase.Database;
 using MusicBase.Models;
-using static MusicBase.Controllers.BlobController;
 
 namespace MusicBase.Controllers
 {
 	public class MusicsController : Controller
 	{
 		private readonly DbConnection _context;
-		BlobServiceClient blobServiceClient;
-		BlobClient blobClient;
-		BlobContainerClient coversClient, tracksClient;
-		private const string magazineAccountName = "projektkm";
-
-		private const string connectionKey =
-			"g7zeQcFGB1Msh96/m2dwdqOkpFSXjal8rOaTnHx8UomLN1nGxxzLHeZ/LZDJ5Qn+QVYbO/m0kNII+ASt+rTN9A==";
 
 		public MusicsController(DbConnection context)
 		{
 			_context = context;
-			//GetClients();
 		}
 
 		// GET: Musics
@@ -82,7 +72,7 @@ namespace MusicBase.Controllers
 			Music music = await _context.Musics.FirstOrDefaultAsync(m => m.MusicId == id);
 			if (music == null)
 				return NotFound();
-			await TryGetCoverAndTrack(id.Value);
+			ConvertTrackAndCover(id.Value);
 			return View(music);
 		}
 
@@ -118,7 +108,7 @@ namespace MusicBase.Controllers
 				return NotFound();
 
 			ViewBag.Genre = new SelectList(Enum.GetNames(typeof(Genre)));
-			await TryGetCoverAndTrack(id.Value);
+			ConvertTrackAndCover(id.Value);
 
 			return View(music);
 		}
@@ -187,14 +177,6 @@ namespace MusicBase.Controllers
 			return _context.Musics.Any(e => e.MusicId == id);
 		}
 
-		private async void GetClients()
-		{
-			GetBlobServiceClient(ref blobServiceClient, magazineAccountName, connectionKey);
-			GetBlobClient(ref blobClient, magazineAccountName, connectionKey);
-			coversClient = blobServiceClient.GetBlobContainerClient("covers");
-			tracksClient = blobServiceClient.GetBlobContainerClient("tracks");
-		}
-
 		private async Task ProcessCoverAndTrackForm(int id, bool create = false)
 		{
 			Dictionary<string, IFormFile?> files = new();
@@ -223,20 +205,21 @@ namespace MusicBase.Controllers
 				await using var stream =
 					System.IO.File.Open($"{path}/{file.Key}_{id}.{extensions[file.Key]}", FileMode.Create);
 				await file.Value.CopyToAsync(stream);
-				await UploadFile(coversClient, $"temp/upload/{id}/{file.Key}_{id}.{extensions[file.Key]}");
 			}
 		}
 
-		private async Task TryGetCoverAndTrack(int id)
+		private void ConvertTrackAndCover(int id)
 		{
 			string base64;
 			try
 			{
-				base64 = Convert.ToBase64String(await DownloadFileContent(coversClient, $"cover_{id}.png"));
+				byte[] filebytes = System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() + $"\\temp\\upload\\{id}\\cover_{id}.png");
+				base64 = Convert.ToBase64String(filebytes);
 				ViewData["Cover"] = "data:image / jpeg; base64," + base64;
-				
-				base64 = Convert.ToBase64String(await DownloadFileContent(tracksClient, $"track_{id}.mp3"));
-                ViewData["Track"] = "data:audio / mp3; base64," + base64;
+
+				filebytes = System.IO.File.ReadAllBytes(Directory.GetCurrentDirectory() + $"\\temp\\upload\\{id}\\track_{id}.mp3");
+				base64 = Convert.ToBase64String(filebytes);
+				ViewData["Track"] = "data:audio / mp3; base64," + base64;
 			}
 			catch (Exception) { }
 		}
@@ -258,6 +241,3 @@ namespace MusicBase.Controllers
 		}
 	}
 }
-//282
-//232
-//286

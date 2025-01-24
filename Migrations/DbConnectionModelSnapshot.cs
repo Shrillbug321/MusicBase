@@ -22,6 +22,23 @@ namespace MusicBase.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("MusicBase.Models.Genre", b =>
+                {
+                    b.Property<int>("GenreId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GenreId"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GenreId");
+
+                    b.ToTable("Genres");
+                });
+
             modelBuilder.Entity("MusicBase.Models.Music", b =>
                 {
                     b.Property<int>("MusicId")
@@ -37,7 +54,7 @@ namespace MusicBase.Migrations
                     b.Property<byte[]>("Cover")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int>("Genre")
+                    b.Property<int>("GenreId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Length")
@@ -59,7 +76,20 @@ namespace MusicBase.Migrations
 
                     b.HasKey("MusicId");
 
+                    b.HasIndex("GenreId");
+
                     b.ToTable("Musics");
+                });
+
+            modelBuilder.Entity("MusicBase.Models.Music", b =>
+                {
+                    b.HasOne("MusicBase.Models.Genre", "Genre")
+                        .WithMany()
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genre");
                 });
 #pragma warning restore 612, 618
         }

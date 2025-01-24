@@ -8,5 +8,6 @@ namespace MusicBase.Database
 		public DbConnection(DbContextOptions<DbConnection> options) : base(options)
 		{ }
 		public DbSet<Music> Musics { get; set; }
+		public DbSet<Genre> Genres { get; set; }
 	}
 }
